@@ -11,15 +11,16 @@ import { Assessment } from './components/evaluation/assessment';
 import { EvaluationResults } from './components/evaluation/results';
 import { EvaluationSummary } from './components/evaluation/summary';
 import { EvaluationActions } from './components/evaluation/actions';
+import { StartEvaluation } from './components/evaluation/start';
 
 const App = () => (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />}>
+          <Route path="/" element={<Dashboard/>}>
             <Route
               path="start"
-              element={<span>Wat</span>}
+              element={<StartEvaluation/>}
             />
           </Route>
           <Route path="/:evaluationId" element={<Dashboard/>}>
@@ -29,27 +30,27 @@ const App = () => (
             />
             <Route
               path="processes"
-              element={<EvaluationProcesses />}
+              element={<EvaluationProcesses/>}
             />
             <Route
               path="data-types"
-              element={<DataTypes />}
+              element={<DataTypes/>}
             />
             <Route
               path="tools"
-              element={<EvaluationTools />}
+              element={<EvaluationTools/>}
             />
             <Route
               path="assessment"
-              element={<Assessment />}
+              element={<Assessment/>}
             />
             <Route
               path="results"
-              element={<EvaluationResults />}
+              element={<EvaluationResults/>}
             />
             <Route
               path="summary"
-              element={<EvaluationSummary />}
+              element={<EvaluationSummary/>}
             />
             <Route
               path="actions"

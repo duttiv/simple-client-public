@@ -27,64 +27,64 @@ export const mainListItems = (evaluationId) => (
     </Link>
     <Collapse in timeout="auto" unmountOnExit>
       <List component="div" disablePadding>
-        <Link className="plain" to={`/${evaluationId}/stakeholders`}>
-          <ListItemButton sx={{ pl: 4 }}>
+        <Link className="plain" to={evaluationId ? `/${evaluationId}/stakeholders` : 'start'}>
+          <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <PeopleIcon/>
             </ListItemIcon>
             <ListItemText primary="Stakeholders"/>
           </ListItemButton>
         </Link>
-        <Link className="plain" to={`/${evaluationId}/processes`}>
-          <ListItemButton sx={{ pl: 4 }}>
+        <Link className="plain" to={evaluationId ? `/${evaluationId}/processes` : 'start'}>
+          <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <LayersIcon/>
             </ListItemIcon>
             <ListItemText primary="Processes"/>
           </ListItemButton>
         </Link>
-        <Link className="plain" to={`/${evaluationId}/data-types`}>
-          <ListItemButton sx={{ pl: 4 }}>
+          <Link className="plain" to={evaluationId ? `/${evaluationId}/data-types` : 'start'}>
+            <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <DataArrayIcon/>
             </ListItemIcon>
             <ListItemText primary="Data types"/>
           </ListItemButton>
         </Link>
-        <Link className="plain" to={`/${evaluationId}/tools`}>
-          <ListItemButton sx={{ pl: 4 }}>
+          <Link className="plain" to={evaluationId ? `/${evaluationId}/tools` : 'start'}>
+            <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <HardwareIcon/>
             </ListItemIcon>
             <ListItemText primary="Tools"/>
           </ListItemButton>
         </Link>
-        <Link className="plain" to={`/${evaluationId}/assessment`}>
-          <ListItemButton sx={{ pl: 4 }}>
+        <Link className="plain" to={evaluationId ? `/${evaluationId}/assessment` : 'start'}>
+          <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <AssessmentIcon/>
             </ListItemIcon>
             <ListItemText primary="Assessment"/>
           </ListItemButton>
         </Link>
-        <Link className="plain" to={`/${evaluationId}/results`}>
-          <ListItemButton sx={{ pl: 4 }}>
+          <Link className="plain" to={evaluationId ? `/${evaluationId}/results` : 'start'}>
+            <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <GridViewIcon/>
             </ListItemIcon>
             <ListItemText primary="Results"/>
           </ListItemButton>
         </Link>
-        <Link className="plain" to={`/${evaluationId}/summary`}>
-          <ListItemButton sx={{ pl: 4 }}>
+          <Link className="plain" to={evaluationId ? `/${evaluationId}/summary` : 'start'}>
+            <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <GradingIcon/>
             </ListItemIcon>
             <ListItemText primary="Summary"/>
           </ListItemButton>
         </Link>
-        <Link className="plain" to={`/${evaluationId}/actions`}>
-          <ListItemButton sx={{ pl: 4 }}>
+          <Link className="plain" to={evaluationId ? `/${evaluationId}/actions` : 'start'}>
+            <ListItemButton disabled={!evaluationId} sx={{ pl: 4 }}>
             <ListItemIcon>
               <ChecklistRtlIcon/>
             </ListItemIcon>

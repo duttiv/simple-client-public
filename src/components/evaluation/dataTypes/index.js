@@ -17,6 +17,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Button from '@mui/material/Button';
 import { useNavigate, useParams } from "react-router-dom";
 import { stringToColor } from '../../../helpers';
+import Tooltip from '@mui/material/Tooltip';
 
 const calculateCount = (selected, dataTypes) => {
   const result = [];
@@ -115,14 +116,18 @@ export const DataTypes = () => {
                         if (dataType) {
                           return (
                             <Fragment>
-                              <Chip
-                                sx={{
-                                  marginBottom: '4px',
-                                  backgroundColor: `${stringToColor(dataType.name)}60`
-                                }}
-                                label={dataType.name}
-                                size="small"
-                              />
+                              <Tooltip title={dataType.description} placement="right">
+                                <Chip
+                                  sx={{
+                                    marginBottom: '4px',
+                                    backgroundColor: `${stringToColor(dataType.name)}`,
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                  }}
+                                  label={dataType.name}
+                                  size="small"
+                                />
+                              </Tooltip>
                               <br/>
                             </Fragment>
                           );

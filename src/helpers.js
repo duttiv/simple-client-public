@@ -1,16 +1,22 @@
 export const stringToColor = (string) => {
+  // Remove common word and trim spaces
+  let str = string.replace('competencies', '').trim();
+  str = str.replace("l", "Q");
+  str = str.replace("z", "4");
+  str = str.replace("o", "g");
+  str = str.replace("j", "6");
   let hash = 0;
-  let i;
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 7) - hash);
   }
-  let color = '#';
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
+  let colour = '#';
+  for (let i = 0; i < 3; i++) {
+    let value = (hash >> (i * 8)) & 0xFF;
+    colour += ('00' + value.toString(16)).substr(-2);
   }
-  return color;
+  return colour;
 }
+
 
 export const calculateTotalCriteria = (scores) => {
   const total = {};
@@ -45,7 +51,7 @@ export const stringAvatar = (user) => {
       bgcolor: stringToColor(name),
       width: 24,
       height: 24,
-      fontSize: '11px'
+      fontSize: '11px',
     },
     children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
   };

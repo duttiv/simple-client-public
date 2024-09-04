@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -15,8 +15,9 @@ import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
 import { Outlet, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -68,10 +69,23 @@ const defaultTheme = createTheme();
 
 export default function Dashboard({ navigate, content }) {
   const [open, setOpen] = useState(true);
+  const [user, setUser] = useState({});
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const { evaluationId } = useParams();
+
+  useEffect(() => {
+    if (evaluationId) {
+      axios.get(`/api/user?evaluationId=${evaluationId}`).then((response) => {
+        if (response.status === 200 && response.data && response.data.length > 0) {
+          setUser(response.data[0]);
+        } else {
+          setUser({});
+        }
+      })
+    }
+  }, [evaluationId]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -102,7 +116,10 @@ export default function Dashboard({ navigate, content }) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Skills Intelligence Evaluation Dashboard
+              {user.id
+                ? `Welcome, ${user.firstName} ${user.lastName}`
+                : 'Skills Intelligence Evaluation Dashboard'
+              }
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

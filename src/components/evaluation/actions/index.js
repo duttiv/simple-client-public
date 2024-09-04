@@ -8,7 +8,7 @@ import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import Table from '@mui/material/Table';
 import axios from 'axios';
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { stringAvatar } from '../../../helpers';
 import { Autocomplete, Avatar, Stack, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -63,6 +63,16 @@ export const EvaluationActions = () => {
           </div>
         )
       }
+    }
+  };
+
+  const postActions = () => {
+    if (newActions.length > 0) {
+      axios.post('/api/evaluation/actions', {actions: newActions, evaluationPeriodId})
+      .then(() => {
+        setActions(allActions);
+        setNewActions([]);
+      })
     }
   };
 
@@ -125,25 +135,34 @@ export const EvaluationActions = () => {
                   </TableCell>
                   <TableCell>
                     <Button onClick={() => {
-                      setNewActions([...newActions, addedAction]);
-                      setAddedAction({});
+                      if (addedAction.activity && addedAction.userId) {
+                        setNewActions([...newActions, addedAction]);
+                        setAddedAction({});
+                      }
                     }}>
                       Add!
                     </Button>
                   </TableCell>
                 </TableRow>
               )}
-              <br />
-              <Stack direction="row" justifyContent="start">
-                <Button
-                  variant="contained"
-                  onClick={() => setAddedAction({ activity: '', userId: null})}
-                >
-                  Add action..
-                </Button>
-              </Stack>
             </TableBody>
           </Table>
+          <div style={{ margin: '10px 20px' }}>
+            <Stack direction="row" justifyContent="space-between">
+              <Button
+                variant="contained"
+                onClick={() => setAddedAction({ activity: '', userId: null })}
+              >
+                Add action..
+              </Button>
+              <Button
+                variant="contained"
+                onClick={postActions}
+              >
+                Save
+              </Button>
+            </Stack>
+          </div>
         </Paper>
       </Grid>
     </Grid>

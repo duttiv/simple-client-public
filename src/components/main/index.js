@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper';
 import Deposits from '../dashboard/Deposits';
 import Orders from '../dashboard/Orders';
 import React, { useState } from 'react';
+import Button from '@mui/material/Button';
 
 export const Main = () => {
   const [selectedStakeholders, setSelectedStakeholders] = useState([]);

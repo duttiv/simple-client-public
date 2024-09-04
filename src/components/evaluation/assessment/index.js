@@ -7,12 +7,15 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import Table from '@mui/material/Table';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Tooltip from '@mui/material/Tooltip';
 import axios from 'axios';
-import { FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { FormControl, MenuItem, Popover, Select, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate, useParams } from "react-router-dom";
 import { calculateTotalCriteria, calculateTotalDataTypes } from '../../../helpers';
 import { ScoreAvatar } from '../../core/scoreAvatar';
+import IconButton from '@mui/material/IconButton';
 
 export const Assessment = () => {
   const { evaluationId } = useParams();
@@ -20,6 +23,7 @@ export const Assessment = () => {
   const [qualityCriteria, setQualityCriteria] = useState([]);
   const [scores, setScores] = useState({});
   const [disabled, setDisabled] = useState(true);
+  const [popover, setPopover] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -118,6 +122,23 @@ export const Assessment = () => {
     label: 'poor'
   }];
 
+  const processLines = (text) => {
+    if (!text) {
+      return null;
+    }
+    const lines = text.split('\\n');
+    return (
+      <div>
+        {lines.map((line, index) => (
+          <>
+            {line}
+            {index < lines.length - 1 && <br/>}
+          </>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={12} lg={12}>
@@ -130,6 +151,11 @@ export const Assessment = () => {
                 {evaluationDataTypes.map((dataType) => (
                   <TableCell align="center">
                     {dataType.name}
+                    <Tooltip title={dataType.description}>
+                      <IconButton>
+                        <HelpOutlineIcon sx={{ fontSize: 14 }}/>
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 ))}
                 <TableCell>Total</TableCell>
@@ -138,7 +164,45 @@ export const Assessment = () => {
             <TableBody>
               {qualityCriteria.map((quality) => (
                   <TableRow key={quality.id}>
-                    <TableCell>{quality.name}</TableCell>
+                    <TableCell>{quality.name}
+                      <IconButton onClick={() => setPopover(quality.id)}>
+                        <HelpOutlineIcon sx={{ fontSize: 14 }}/>
+                      </IconButton>
+                      <Popover
+                        id={quality.id}
+                        open={popover === quality.id}
+                        onClose={() => setPopover(null)}
+                        anchorOrigin={{
+                          vertical: 'center',
+                          horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                          vertical: 'center',
+                          horizontal: 'center',
+                        }}
+                      >
+                        <div style={{
+                          width: '600px',
+                          minHeight: '100px',
+                          padding: '20px',
+                          fontSize: '14px'
+                        }}>
+                          <h3>{quality.name}</h3>
+                          {quality.description}
+                          {quality.guidelines && (
+                            <>
+                              <br/>
+                              <br/>
+                              <b>Evaluation guidelines:</b>
+                              <br/>
+                              <div style={{ whiteSpace: 'pre-wrap' }}>
+                                {processLines(quality.guidelines)}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </Popover>
+                    </TableCell>
                     {evaluationDataTypes.map((dataType) => (
                       <TableCell align="center">
                         <FormControl fullWidth>
@@ -151,8 +215,10 @@ export const Assessment = () => {
                               setScore(quality.id, dataType.id, e.target.value)}
                           >
                             {scoreOptions.map((scoreOption) => (
-                              <MenuItem value={scoreOption.value}>{scoreOption.label}</MenuItem>))
-                            }
+                              <MenuItem value={scoreOption.value}>
+                                {scoreOption.label} ({scoreOption.value})
+                              </MenuItem>
+                            ))}
                           </Select>
                         </FormControl>
                       </TableCell>

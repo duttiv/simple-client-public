@@ -61,11 +61,7 @@ export const EvaluationStakeholders = () => {
         setSelected(selectedSh);
         setStakeholders(stakeholdersResponse);
         setSelectedUsers(selectedStakeholdersResponse);
-        console.log(selectedStakeholdersResponse);
-        if (selectedStakeholdersResponse.length === 1
-          && selectedStakeholdersResponse[0] === 1) {
-          setDisabled(false);
-        }
+        setDisabled(false);
       })
     }
   }, [evaluationPeriodId]);
@@ -182,26 +178,6 @@ export const EvaluationStakeholders = () => {
             </TableBody>
           </Table>
           <br/>
-          <Autocomplete
-            disabled={disabled}
-            value={autoCompleteValue}
-            disableClearable
-            disablePortal
-            options={stakeholders
-            .filter((sh) => selected.indexOf(sh.id) < 0)
-            .map((department) => ({
-              id: department.id,
-              label: department.name
-            }))}
-            onChange={(e, value) => {
-              if (value) {
-                setSelected([...selected, value.id]);
-                setAutoCompleteValue([]);
-              }
-            }}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Add..."/>}
-          />
           <Stack direction="row" justifyContent="end">
             <Button
               variant="contained"
